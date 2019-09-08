@@ -1,0 +1,182 @@
+import java.util.Scanner;
+
+/**
+ * 
+ * @author Can Ngo
+ * 9/8/2019 (Freshman Year of University)
+ * 
+ * This program is a BMI Calculator. It will ask you for your preferred units of measurements each step.
+ * For example, it asks you if you want it to be in inches or meters. You have the option of choosing.
+ * Choosing the height measurement and entering your height value is the first portion of this program. 
+ * This program will then ask you for your preferred weight in units. After you enter your weight value, it displays BMI. 
+ * 
+ */
+public class BMIprogram {
+
+	public static void main(String[] args) {
+	
+	try {
+		Scanner inputMetersOrInchesOrFeet = new Scanner(System.in); 
+		Scanner inputHeight=new Scanner(System.in);
+		Scanner inputWeight=new Scanner(System.in);
+		Scanner inputWeightAsk = new Scanner(System.in);
+		Scanner inputHeightAsk = new Scanner(System.in);
+		Scanner inputHeightAsk2 = new Scanner(System.in);
+	
+		System.out.println("Would you like to enter your height into inches, meters, or feet and inches? Type 'm' for meters, 'i' for inches, 'f' for feet AND inches. or just inches or meters or feet");
+		String inchesOrMetersOrFeet=inputMetersOrInchesOrFeet.nextLine();
+		
+		
+		//Condition of user enters Meters
+		
+		if (inchesOrMetersOrFeet.equals("Meters")||inchesOrMetersOrFeet.equals("meters")||inchesOrMetersOrFeet.equals("m")) {
+			
+			//heightInput will be taken as a double or integer
+			System.out.println("Enter your height in meters:");
+			double heightInput = inputHeight.nextDouble();
+			
+			//Prompt for kg or lbs
+			System.out.println("Would you like to enter your weight in kg or lbs?");
+			String kgOrlbs = inputWeightAsk.nextLine();
+			
+			
+			//Condition if it is in Meters AND KG
+			if (kgOrlbs.equals("kg")||kgOrlbs.equals("Kg")||kgOrlbs.equals("KG")) {
+				
+				System.out.println("kg selected. Please input your weight in kg");
+				double weightInput=inputWeight.nextDouble();
+				
+				double BMI = (double)weightInput/(Math.pow(heightInput, 2));
+				
+				System.out.println("Your BMI is " + BMI);
+				
+			}
+			
+			//condition if it is in meters and lbs. 
+			
+			else if (kgOrlbs.equals("lbs")||kgOrlbs.equals("LBS")||kgOrlbs.equals("Lbs")) {
+				
+				System.out.println("lbs selected. Please input your weight in lbs: ");
+				double lbInput = inputWeight.nextDouble();
+				double weightInput = (double)lbInput*(.45359237);
+				
+				double BMI = (double)weightInput/(Math.pow(heightInput, 2));
+				System.out.println("Your BMI is " + BMI);
+					
+			}else {
+				System.out.println("Error. Porgram Ending. Please enter 'kg' or 'lbs' next time");
+				System.exit(0);
+			}
+			
+			
+		}
+		//Condition if meters
+		
+		
+		
+		//Condition for inches only
+		else if (inchesOrMetersOrFeet.equals("inches")||inchesOrMetersOrFeet.equals("Inches")||inchesOrMetersOrFeet.equals("inch")) {
+			
+			
+			System.out.println("inches selected. Enter your height in inches:");
+			double heightInchesInput = inputHeight.nextDouble();
+			double heightInMeters = (double).0254*(heightInchesInput);
+		
+			
+			System.out.println("Would you like to enter your height in kg or lbs. Type 'kg' or 'lbs'?");
+			String kgOrlbs = inputWeightAsk.nextLine();
+			
+			
+			//Condition if it is in inches and kg
+			if (kgOrlbs.equals("kg")||kgOrlbs.equals("Kg")||kgOrlbs.equals("KG")) {
+				
+				System.out.println("kg selected. Please input your weight in kg");
+				double weightInput=inputWeight.nextDouble();
+				
+				double BMI = (double)weightInput/(Math.pow(heightInMeters, 2));
+				
+				System.out.println("Your BMI is " + BMI);
+				
+			}
+			
+			//Condition if it is in inches and pounds
+			else if (kgOrlbs.equals("lbs")||kgOrlbs.equals("LBS")||kgOrlbs.equals("Lbs")) {
+				
+				System.out.println("lbs selected. Please input your weight in lbs: ");
+				double lbInput = inputWeight.nextDouble();
+				double weightInput = (double)lbInput*(.45359237);
+				
+				double BMI = (double)weightInput/(Math.pow(heightInMeters, 2));
+				System.out.println("Your BMI is " + BMI);
+				
+				
+				
+			}else {
+				System.out.println("Error. Porgram Ending. Please enter 'kg' or 'lbs' next time");
+				System.exit(0);
+			}
+			
+		}
+		//Condition for inches only
+		
+		//Condition for feet and inches 
+		else if(inchesOrMetersOrFeet.equals("feet")||inchesOrMetersOrFeet.equals("ft")||inchesOrMetersOrFeet.equals("f")) {
+				
+				System.out.println("Feet and inches selected. You must enter the feet number first. After you enter the feet number, enter your remaining inches: ");
+				System.out.println("Feet: ");
+				double feetInput=inputHeightAsk.nextDouble();
+				
+				System.out.print("Inches: ");
+				double remainingInches=inputHeightAsk2.nextDouble();
+						
+				
+				double heightTotalInches=feetInput*12.0 + (remainingInches);
+				double heightInMeters=heightTotalInches*(double).0254;
+				
+				System.out.println("Would you like to enter your height in kg or lbs. Type 'kg' or 'lbs'?");
+				String kgOrlbs = inputWeightAsk.nextLine();
+				
+				
+				//Condition if it is in ft and kg
+				if (kgOrlbs.equals("kg")||kgOrlbs.equals("Kg")||kgOrlbs.equals("KG")) {
+					
+					System.out.println("kg selected. Please input your weight in kg");
+					double weightInput=inputWeight.nextDouble();
+					
+					double BMI = (double)weightInput/(Math.pow(heightInMeters, 2));
+					
+					System.out.println("Your BMI is " + BMI);
+					
+				}
+				
+				//Condition if it is in ft and pounds
+				else if (kgOrlbs.equals("lbs")||kgOrlbs.equals("LBS")||kgOrlbs.equals("Lbs")) {
+					
+					System.out.println("lbs selected. Please input your weight in lbs: ");
+					double lbInput = inputWeight.nextDouble();
+					double weightInput = (double)lbInput*(.45359237);
+					
+					double BMI = (double)weightInput/(Math.pow(heightInMeters, 2));
+					System.out.println("Your BMI is " + BMI);
+					
+					
+					
+				}	else {
+					System.out.println("Error. Porgram Ending. Please enter 'kg' or 'lbs' next time");
+					System.exit(0);
+				}
+				
+			
+		}//if statement end bracket
+		
+		else {
+			System.out.println("Error. Program ending. Please enter 'i' 'f' or 'm'. or 'meters','inches' ,or'feet' next time");
+			System.exit(0);
+		}
+	
+
+	} catch(Exception e) {
+		System.out.println("Invalid inputs. Program ending");
+	}
+	}
+}
