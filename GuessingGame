@@ -1,0 +1,97 @@
+/**
+ * 
+ *Can Viet Ngo
+
+ *September 12, 2019
+ * 
+ *
+ * Still learning Java
+ * 
+ * This is a guessing game program that I created. It is really
+ * messy and has a LOT of while loops. It is good for understanding
+ * the concept of creating a loop, breaking a loop, a loop in a loop that has looped back to
+ * the outer loop...etc.
+ * 
+ */
+
+import java.util.Scanner;
+public class GuessGame {
+
+	public static void main(String[] args) {
+			Scanner input = new Scanner(System.in);
+			int x;
+			x=1;
+			//initiates while loop
+			while(x==1) {
+			System.out.print("Would you like to play the guessing game? Enter 1 to play, 0 to leave: ");
+			
+			//prompts the user to enter 1 or 0.
+			int YesorNo = input.nextInt();
+			
+			//if user enters 1 then the game begins
+			if(YesorNo == 1) {
+				//creates a random integer
+				int randomNumber = (int)(1+(Math.random()*10));
+				System.out.println("Ok! Lets begin");
+				
+				//YesorNo is 1. So this loop continues the game.
+				while(YesorNo==1) {
+				
+				System.out.print("Enter a random number between 1 and 10 (includes 1 and 10!): ");
+				
+				int userGuess = input.nextInt();
+				if(userGuess == randomNumber) {
+					System.out.println("Good Job!");
+					//correct guess will nest a loop inside YesorNo == 1
+					while(true) {
+					System.out.print("Do you want to play again? Type 0 or 1: ");
+					int playAgain = input.nextInt();
+					
+					if (playAgain == 0) { 
+						/**
+						 * if user enters 0, x will be 2 and YesorNo will be 0.
+						 * when x = 2, the OUTER MOST LOOP will cancel out.
+						 * When YesorNo=0, then THIS CURRENT LOOP will cancel out as well.
+						 */
+						x=2;
+						YesorNo = 0;
+						break;
+					}else if (playAgain == 1) {
+							/**
+							 * Generates and stores another guess if 
+							 * the user wants to play again. 
+							 */
+							randomNumber=(int)(1+(Math.random()*10));
+							break;
+
+						
+					}else if (playAgain !=0 && playAgain!=1) {
+						while(true) { //repeats question
+						break;}
+					}
+					}
+					
+				}else{ //CONDITION FOR IF THE GUESS IS WRONG!
+					System.out.println("Wrong Guess. Try again.");
+						while(true) {
+							break;
+						}
+				}
+				
+			}
+			}else if (YesorNo == 0) {
+				//if user enters 0, integer x will now be 2 and end the while loop.
+				x=2;
+			//will loop the user back to the question if integer is not 1 or 0
+			}else if (YesorNo!=1 && YesorNo!=0) {
+				while(true) {
+					System.out.println("Please enter 0 or 1");
+					break;
+				}
+			}
+			
+		}
+			System.out.println("Goodbye!");
+	}
+
+}
