@@ -1,0 +1,139 @@
+
+/**
+ * Can Viet Ngo
+ * 
+ * My explanation at the bottom.
+ * 
+ * This program allows the user to enter and store 
+ * as MANY numbers into an array as possible.
+ * At the end, the program tells the user which numbers are 
+ * even or odd!
+ * 
+ */
+import java.util.Scanner;
+public class ArrayInputAndCheck {
+	public static void main(String[] args) {
+		//first input outside while loop
+		Scanner input = new Scanner(System.in);
+		//second input scanner INSIDE while loop
+		Scanner input2 = new Scanner(System.in);
+		System.out.print("Check number: ");
+		
+	
+		
+		System.out.println("How many numbers would you like to store? ");
+		int userInt = input.nextInt();
+		//our number of user desired slots is named as a constant ARRAYLENGTH to keep the value the same throughout.
+		final int ARRAYLENGTH = userInt;
+		
+		int myArray[] = new int[userInt];
+		
+		System.out.println("");
+		
+		while(userInt>0) {
+			
+			System.out.println("Enter value number " + (ARRAYLENGTH-userInt +1)+ " :");
+			
+			int userInput = input2.nextInt();
+			
+			myArray[ARRAYLENGTH-userInt] = userInput;
+			
+	
+			/**
+			 * userInt will decrease by 1 as it allows us to subtract
+			 * one integer LOWER from myArray[]...this results in us being able to go
+			 * from 0 -> 1 -> 2 ->...->[n-(n-(n-1))]
+			 */
+			userInt = userInt - 1;
+			
+			/**
+			 * when userInt = 1,
+			 * then we get the myArray[ARRAYLENGTH - (ARRAYLENGTH-1)] = final index
+			 * Then userInt = 0 and the loop ends.
+			 */
+			
+		}
+		
+		spacing();
+		//Same exact concept as above. We aren't storing anything, just displaying
+		int userStandIn = ARRAYLENGTH;
+		
+		while (userStandIn > 0) {
+			System.out.println("Index number "+ (ARRAYLENGTH-userStandIn)+ ", slot " + (ARRAYLENGTH-(userStandIn-1)) + " is "+myArray[ARRAYLENGTH-userStandIn]);
+			
+			userStandIn = userStandIn - 1;
+		}
+		System.out.println("");
+		
+		System.out.println("Your array contains " + myArray.length + " numbers inside it.");
+		
+		//userStandIn is now = to 0
+		//userStandIn2 will now be the decreasing variable 
+		int userStandIn2 = ARRAYLENGTH;
+		
+		System.out.println("");
+		
+		while (userStandIn2 > 0) {
+			//checks to see if the array[n] is even or odd
+			evenOdd(myArray[ARRAYLENGTH-userStandIn2]);
+			
+			
+			userStandIn2 = userStandIn2-1;
+		}
+		
+		
+			}
+	
+	//method for checking even or odd values in our array
+	static void evenOdd(int num) {
+		if (num % 2 == 0) {
+			System.out.println(num + " is even");
+		}else {
+			System.out.println(num + " is odd");
+		}
+
+	}
+	
+	static void spacing(){
+		System.out.println("");
+		System.out.println("");
+	}
+	
+	/**
+	 * STEPS FOR HOW TO GO FROM STORING INDEX 0 to (userInt-1) INDEX:
+	 * 
+	 * We will store the user's desired inputs for their array by doing this:
+	 * myArray[n-n] = user's 1st input stored in index 0
+	 * myArray[n-(n-1)] = user's 2nd input stored in index 1. As n-(n-1) = 1
+	 * myArray[n-(n-2)]
+	 * ...
+	 * myArray[n-(n-(n-1))] = user's last number to be stored in the (n-1)th index
+	 * 
+	 * example:
+	 * if user wanted 5 slots so userInt = 5.
+	 * ARRAYLENGTH = 5.
+	 * So
+	 * 
+	 * myArray[5-5] = userInput index 0 stored
+	 * myArray[5-4]= userInput index 1 stored
+	 * myArray[5-3] = userInput index 2 stored...
+	 * ...
+	 * myArray[n-(n-(n-1))] => myArray[5-(5-4)] => myArray[5-1] = userInput final index n-1 stored.
+	 * 
+	 * when THING BEING SUBTRACTED goes to 0, the while loop ends.
+	 * The deceasing variable goes to 0 AFTER we input the last index!
+	 * 
+	 * So every time we re loop it, what is being subtracted will decrease by one.
+	 * The variable being subtracted will keep decreasing until it hits 0. When it hits 0, the loop will end
+	 * since we already have all of our numbers.
+	 * 
+	 * NOTE: the loop will read and store the user's value 
+	 * and store it inside the designated index EVERY ITERATION and store it to the next array. 
+	 * Basically, the most important part is doing the arithmetic correct.
+	 * The user will be inputting the values in for every loop. 
+	 * 
+	 
+	 */
+
+}
+
