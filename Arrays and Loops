@@ -1,0 +1,119 @@
+/**
+ * 
+ * @author Can Ngo
+ * 
+ * Program to test my array and loop logic.
+ * 
+ * Let the user input x amount of numbers and find the max, min, sum, and average of all those 
+ * numbers.
+ *
+ */
+
+import java.util.Scanner;
+public class ArrayOperations {
+
+	public static void main(String[] args) {
+		Scanner input = new Scanner(System.in);
+		Scanner input2 = new Scanner(System.in);
+		
+		System.out.println("How many numbers do you want to enter?: ");
+		int userSlots = input.nextInt();
+		
+		int[] myArray = new int[userSlots];
+		
+		
+		for(int i = 0; i < userSlots; ++i) {
+			
+			System.out.println("Enter slot " + (i+1) + ": ");
+			int userInput = input2.nextInt();
+			myArray[i] = userInput;
+		}
+		
+		int lowestNum = 0;
+		int highestNum = 0;
+		
+		/**
+		 * if myArray[i] is less than the array NEXT to it, myArray[l], then myArray[i] will 
+		 * always be the lowest number. However, if it is the case such that 
+		 * myArray[i] is greater than myArray[l], we will have to evaluate the new low value
+		 * i will take the value of l during that iteration check, so myArray[i=l] for that loop 
+		 * and forever. Repeat this process. 
+		 * 
+		 * 
+		 */
+		
+		for(int i = 0, l = 1; l < userSlots; ++l) {
+			if(myArray[i] < myArray[l]) {
+				i = i;
+				lowestNum = myArray[i];
+				
+			}else {
+				
+				i = l;
+				lowestNum = myArray[i];
+				
+			}
+			
+			System.out.println("Current lowest:" + lowestNum);
+		}
+		
+		/**
+		 * similar to the loop for finding the lowest value but this time we will make it so
+		 * myArray[i] will be greater than the index next to it.
+		 */
+		
+		for(int i = 0, l = 1; l < userSlots; ++l) {
+			if(myArray[i] > myArray[l]) {
+				i = i;
+				highestNum = myArray[i];
+				
+			}else {
+				
+				i = l;
+				highestNum = myArray[i];
+				
+			}
+			
+			System.out.println("Current highest:" + highestNum);
+			
+		}
+		
+		int sum = 0;
+		for(int i = 0; i < userSlots; ++i) {
+			
+			sum += myArray[i];
+			
+		}
+		
+		//figure out if there are any duplicates for each index in the array
+		
+		int counter = 0;
+		for(int i = 0; i < userSlots; ++i) {
+			
+			for (int l = 0; l < userSlots;++l) {
+				
+				if(myArray[i]==myArray[l] && !(i == l)) {
+					counter = counter + 1;
+				}else {}
+				
+			}
+			
+		}
+	
+		
+		System.out.println("");
+		
+		System.out.println("Sum of all numbers: " + sum);
+		System.out.println("Average of all numbers:" + sum/((double)userSlots));
+		System.out.println("Max:" + highestNum);
+		System.out.println("Min:" + lowestNum);
+		
+		if(counter == 0) {
+			System.out.println("NO DUPLICATES FOUND");
+		}else {System.out.println("DUPLICATES FOUND");}
+	
+		
+		
+	}
+
+}
