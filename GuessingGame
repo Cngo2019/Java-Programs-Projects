@@ -1,6 +1,6 @@
 /**
  * 
- *Can Viet Ngo
+ *Can Ngo
 
  *September 12, 2019
  * 
@@ -9,8 +9,7 @@
  * 
  * This is a guessing game program that I created. It is really
  * messy and has a LOT of while loops. It is good for understanding
- * the concept of creating a loop, breaking a loop, a loop in a loop that has looped back to
- * the outer loop...etc.
+ * the concept of creating a loop, breaking a loop, nested loops
  * 
  */
 
