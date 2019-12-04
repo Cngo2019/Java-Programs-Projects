@@ -2,7 +2,7 @@
  * 
  * @author Can Ngo
  * 
- * Program to test my array and loop logic.
+ * This is a program to test my array and loop logic.
  * 
  * Let the user input x amount of numbers and find the max, min, sum, and average of all those 
  * numbers.
@@ -35,10 +35,12 @@ public class ArrayOperations {
 		/**
 		 * if myArray[i] is less than the array NEXT to it, myArray[l], then myArray[i] will 
 		 * always be the lowest number. However, if it is the case such that 
-		 * myArray[i] is greater than myArray[l], we will have to evaluate the new low value
+		 * myArray[i] is greater than myArray[l], we will have to evaluate the new low value.
 		 * i will take the value of l during that iteration check, so myArray[i=l] for that loop 
-		 * and forever. Repeat this process. 
-		 * 
+		 * and forever. Repeat this process.
+		 *
+		 * note: if the lowest value is overtaken by an even lower value, the NEW lower value will be lower than the
+		 *	 previous old value and ALL OTHER previous values.
 		 * 
 		 */
 		
