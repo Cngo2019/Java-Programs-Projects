@@ -4,12 +4,8 @@
 
  *September 12, 2019
  * 
- *
- * Still learning Java
- * 
- * This is a guessing game program that I created. It is really
- * messy and has a LOT of while loops. It is good for understanding
- * the concept of creating a loop, breaking a loop, nested loops
+ * This program is a guessing game where the user can decide how many times
+ * they would like to play. Utilizes many loops.
  * 
  */
 
