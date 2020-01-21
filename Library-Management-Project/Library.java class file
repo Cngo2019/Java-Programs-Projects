@@ -31,20 +31,19 @@ public class Library {
     //to keep adding books
     public void addBook(Book newBook) {
     		//temporary array to store the previous books
-    		
+    		Book[] newArray = this.bookCollection;
     		//create a new array with ONE MORE index 
-    		Book tempArray[] = new Book[(this.bookCollection).length + 1];
+    		Book[] tempArray = new Book[newArray.length+1];
     		
-    		for(int i = 0; i < tempArray.length; i++) {
-    			//populate this new array with all the current books.
-    			tempArray[i] = this.bookCollection[i];
+    		for(int i = 0; i < newArray.length; ++i) {
+    			tempArray[i] = newArray[i];
     		}
     		//Put the desired book into the extra slot of tempArray
-    		tempArray[tempArray.length] = newBook;
+    		tempArray[tempArray.length-1] = newBook;
     		
     		//bookCollection will now be equal to newArray with the new added book!
-    		bookCollection = tempArray;
-    	
+    		newArray = tempArray;
+    		bookCollection = newArray;
     }
     
     //print out ALL available books for this library
