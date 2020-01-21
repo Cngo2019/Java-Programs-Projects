@@ -1,0 +1,175 @@
+/*
+ * Can Ngo
+ * 
+ * 1/15/20
+ * 
+ * Main menu of project. Mainly focused on storing multiple libraries and doing 
+ * things with their books.
+ */
+
+import java.util.Scanner;
+public class MainMenu {
+	//method to store libraries
+	static Library myLibraries[] = new Library[0];	
+	public static void main(String[] args) {
+		
+	int y = 0;
+		
+	while(y == 0) {
+	Scanner scanner = new Scanner(System.in);
+		
+	System.out.println("1. Print out all library locations \n"
+				+ "2. Add a new library \n"
+				+ "3. Add a book \n"
+				+ "4. Rent \n"
+				+ "5. Return \n"
+				+ "6. View Books");
+	
+	System.out.print("Enter the number corresponding to the option you would like to do: ");
+	int userChoice = scanner.nextInt();
+	System.out.println();
+	switch(userChoice) {	
+	
+	case 1: 
+		printAllAddress();
+		System.out.println();
+		break;
+		
+	case 2:
+		int x = 0;
+		while(x == 0) {
+			Scanner input = new Scanner(System.in);
+			System.out.println("Type in a new library address. Type 'd' to finish: ");
+			
+			String userAddress = input.nextLine();
+			
+			if(userAddress.equals("d")) {
+				x = 1;
+			}else {
+			Library userNewLibrary = new Library(userAddress);
+			addLibrary(userNewLibrary);
+			}
+		}
+		break;
+	
+	case 3:
+		addBook();
+		break;
+	case 4:
+		rentBook();
+		break;
+	case 5:
+		returnBook();
+		break;
+	case 6:
+		viewBooks();
+		break;
+	}
+	
+	System.out.println();
+	System.out.println();
+	System.out.println();
+
+
+  }
+		
+}
+	public static void addLibrary(Library someLibrary) {
+		
+		Library newArray[] = myLibraries;
+		Library tempArray[] = new Library[newArray.length + 1];
+		
+		for(int i = 0; i < newArray.length; i++) {
+			
+			tempArray[i] = newArray[i];
+			
+		}
+		tempArray[newArray.length] = someLibrary; 
+		myLibraries = tempArray;
+	}
+	
+	public static void printAllAddress() {
+		
+		for(int i = 0; i < myLibraries.length; i++) {
+			
+			System.out.print((i+1) + ". ");
+			myLibraries[i].printAddress();
+			
+		}
+		
+	}
+	
+	public static void addBook() {
+		Scanner input = new Scanner(System.in);
+		Scanner inputString = new Scanner(System.in);
+		printAllAddress();
+		
+		System.out.print("Type the number that corresponds to the library address you want to add a book to. Type 0 to end/cancel: ");
+		int userNum = input.nextInt();
+		
+		if(userNum != 0) {
+		System.out.println();
+		System.out.print("Type the title of the book you want to add: ");
+		String bookTitle = inputString.nextLine();
+		
+		//indexes will be 1 less than the displayed menu options
+		myLibraries[userNum-1].addBook(new Book(bookTitle));
+		}
+		
+
+}
+	
+	public static void rentBook() {
+		Scanner input = new Scanner(System.in);
+		Scanner inputString = new Scanner(System.in);
+		printAllAddress();
+		
+		System.out.print("Type the number that corresponds to the library address you want to add a book to: ");
+		int userNum = input.nextInt();
+		System.out.println();
+		
+		if(userNum != 0) {
+		System.out.print("Type the title of the book you want to rent: ");
+		String bookTitle = inputString.nextLine();
+		
+		//indexes will be 1 less than the displayed menu options
+		myLibraries[userNum-1].borrowBook(bookTitle);
+		}
+	}
+	
+	public static void returnBook() {
+		Scanner input = new Scanner(System.in);
+		Scanner inputString = new Scanner(System.in);
+		printAllAddress();
+		
+		System.out.print("Type the number that corresponds to the library address you want to add a book to: ");
+		int userNum = input.nextInt();
+		System.out.println();
+		
+		if(userNum != 0) {
+		System.out.print("Type the title of the book you want to return: ");
+		String bookTitle = inputString.nextLine();
+		
+		//indexes will be 1 less than the displayed menu options
+		myLibraries[userNum-1].returnBook(bookTitle);
+		}
+	}
+	
+	public static void viewBooks() {
+		
+		Scanner input = new Scanner(System.in);
+		
+		printAllAddress();
+		
+		System.out.print("Type the number that corresponds to the library address you want to add a book to: ");
+		int userNum = input.nextInt();
+		System.out.println();
+		
+		//indexes will be 1 less than the displayed menu options
+		myLibraries[userNum-1].printAvailableBooks();
+		
+		
+	}
+	
+
+}
