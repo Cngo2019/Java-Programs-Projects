@@ -1,0 +1,12 @@
+Name: Can Ngo
+The class files are assignment 4 of MIT's "Introduction to Programming in Java" course.
+This project builds off of the assignment.
+
+Project:
+Create a library management system that allows the user to create multiple libraries. Within
+these libraries, allow the user to add books with specific titles. 
+
+Allow the user to search a book, return a book, borrow a book, etc.
+
+Link to assignment and skeleton code of Library.java and Book.Java:
+https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-092-introduction-to-programming-in-java-january-iap-2010/assignments/
