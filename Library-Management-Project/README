@@ -2,7 +2,8 @@ Name: Can Ngo
 Started: January 15, 2020
 
 The class files are assignment 4 of MIT's "Introduction to Programming in Java" course.
-This project builds off of the assignment.
+After completing assignment 4, I decided to build upon the assignment by creating a library management system for the user to 
+interact with.
 
 Project:
 Create a library management system that allows the user to create multiple libraries. Within
