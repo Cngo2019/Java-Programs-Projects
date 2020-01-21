@@ -1,0 +1,185 @@
+/*
+ * Can Ngo
+ * 
+ * 1/15/2020
+ * Library Project
+ * Assignment 4 of MIT's "Introduction to Programming in Java"
+ * 
+ * Create two classes that store books and libraries as objects.
+ * Given the information, create the methods and objects needed for the main methods to work.
+ * 
+ * Link to skeleton code and assignment:
+ * https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-092-introduction-to-programming-in-java-january-iap-2010/assignments/
+ */
+public class Library {
+	
+	String libraryAddress;
+	Book[] bookCollection;
+	//Constructor no parameters. Creates a library
+	
+	public Library() {
+		libraryAddress = "";
+		bookCollection = new Book[0];
+	}
+	//Constructor with parameters. Creates library
+    public Library(String libraryAddress) {
+    		this.libraryAddress = libraryAddress; 
+    		bookCollection = new Book[0];
+    }
+    
+    
+    //to keep adding books
+    public void addBook(Book newBook) {
+    		//temporary array to store the previous books
+    		
+    		//create a new array with ONE MORE index 
+    		Book tempArray[] = new Book[(this.bookCollection).length + 1];
+    		
+    		for(int i = 0; i < tempArray.length; i++) {
+    			//populate this new array with all the current books.
+    			tempArray[i] = this.bookCollection[i];
+    		}
+    		//Put the desired book into the extra slot of tempArray
+    		tempArray[tempArray.length] = newBook;
+    		
+    		//bookCollection will now be equal to newArray with the new added book!
+    		bookCollection = tempArray;
+    	
+    }
+    
+    //print out ALL available books for this library
+    public void printAvailableBooks() {
+    	
+    	if((this.bookCollection).length == 0) {
+    		System.out.println("No books available");
+    	}
+    	
+    	for (int i = 0; i < bookCollection.length; i++) {
+    		/*since each book is an object, we want the title.
+    		Starting From i = 0, look at 
+    		the book in the current index and print out its title! */
+    		
+    		//we can use the printTitle() on a book object since the Book class is public.
+    		(this.bookCollection[i]).printTitle();
+    		System.out.println();
+    	}
+    }
+    
+    public void printAddress() {
+    	System.out.println(this.libraryAddress);
+    }
+    
+    public static void printOpeningHours() {
+    	System.out.println("9 AM to 5 PM every day");
+    }
+    
+    public void borrowBook(String bookName) {
+    	//first thing: if the library has a collection == 0, then there are no books at all.
+    	if(this.bookCollection.length == 0) {
+    		System.out.println("Book not in catalog");
+    	}else { //continue the program if the library does have books.
+    	
+    		for(int i = 0; i < (this.bookCollection).length; i++) {
+    			/*check if the book's title matches from the collection we have.
+    			If there is a title match, this part of our if statement will execute.
+    			 */
+    			if( (this.bookCollection[i].getTitle()).equals(bookName) ) {
+    				//checks to see if the book has been rented
+    				if( (this.bookCollection[i]).isBorrowed() == true ) { //if the book borrowed == true, then we can not rent this book.
+    					System.out.println("Sorry, this book has been rented");   			
+    				}else {    //if the book borrowed == false, then we can rent this book and borrow = true now.
+    					(this.bookCollection[i]).borrowed();
+    					System.out.println("Book has been rented!");
+    					}
+    		
+    		/* if the last index does not match, it means the book
+    		  does not exist in the catalog. Therefore, execute this statement.
+    		*/
+    			}else if( (i == (this.bookCollection).length - 1)){
+    			
+    				System.out.println("Book not in catalog");
+    			
+    			}
+    		}
+    }
+    	
+  }
+    
+    public void returnBook(String bookName) {
+    	//if the book collection is 0, then user is at the wrong library
+		if(this.bookCollection.length - 1 == 0 ) {
+			System.out.println("Book is not in the library's directory. You might be at the wrong library!");
+			
+		}else {
+			for(int i = 0; i < (this.bookCollection).length; i++) {   		
+    		//obtain the book with the desired title and check if it exists
+				if( (this.bookCollection[i].getTitle()).equals(bookName) ) {
+					
+					//checks to see if the book has been rented
+					//if the book borrowed == false, then they already have this book.
+					if( (this.bookCollection[i]).isBorrowed() == false ) {
+    				System.out.println("This book has been returned already!");
+    				//if the book borrowed == false, then we can rent this book and borrow = true now.
+					}else {//get the book at the matched index and return it.
+						(this.bookCollection[i]).returned();
+						System.out.println("Book has been returned. Thank you!");
+					}
+				}else if ( (i == (this.bookCollection).length - 1)){ //if the last index is not matched, user is at wrong library
+					System.out.println("Book is not in the library's directory. You might be at the wrong library!");	
+    		}
+    	}
+    }
+   }
+    
+    /*TEST USING MAIN METHODS*/
+    
+    public static void main(String[] args) {
+        // Create two libraries
+        Library firstLibrary = new Library("10 Main St.");
+        Library secondLibrary = new Library("228 Liberty St.");
+
+        // Add four books to the first library
+        firstLibrary.addBook(new Book("The Da Vinci Code"));
+        firstLibrary.addBook(new Book("Le Petit Prince"));
+        firstLibrary.addBook(new Book("A Tale of Two Cities"));
+        firstLibrary.addBook(new Book("The Lord of the Rings"));
+        
+        // Print opening hours and the addresses
+        System.out.println("Library hours:");
+        printOpeningHours();
+        System.out.println();
+
+        System.out.println("Library addresses:");
+        firstLibrary.printAddress();
+        secondLibrary.printAddress();
+        System.out.println();
+
+        // Try to borrow The Lords of the Rings from both libraries
+        System.out.println("Borrowing The Lord of the Rings:");
+        firstLibrary.borrowBook("The Lord of the Rings");
+        firstLibrary.borrowBook("The Lord of the Rings");
+        secondLibrary.borrowBook("The Lord of the Rings");
+        System.out.println();
+
+        // Print the titles of all available books from both libraries
+        System.out.println("Books available in the first library:");
+        firstLibrary.printAvailableBooks();
+        System.out.println();
+        System.out.println("Books available in the second library:");
+        secondLibrary.printAvailableBooks();
+        System.out.println();
+
+        // Return The Lords of the Rings to the first library
+        System.out.println("Returning The Lord of the Rings:");
+        firstLibrary.returnBook("The Lord of the Rings");
+        System.out.println();
+
+        // Print the titles of available from the first library
+        System.out.println("Books available in the first library:");
+        firstLibrary.printAvailableBooks();
+        
+      
+        
+        
+    }
+} 
