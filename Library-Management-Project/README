@@ -1,11 +1,15 @@
 Name: Can Ngo
-Started: January 15, 2020
+Project Started: January 7, 2020 (Learning objects and classes)
+Programming Started: January 15, 2020 (Writing and working with all the code)
 
 The class files are assignment 4 of MIT's "Introduction to Programming in Java" course.
 After completing assignment 4, I decided to build upon the assignment by creating a library management system for the user to 
 interact with.
 
-Project:
+Part 1:
+Complete assignment 4 on MIT's "Introduction to Programming in Java" course. Code the 'Book.java' and 'Library.java' class files 
+
+Part 2:
 Create a library management system that allows the user to create multiple libraries. Within
 these libraries, allow the user to add books with specific titles. 
 
