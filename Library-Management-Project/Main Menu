@@ -9,7 +9,7 @@
 
 import java.util.Scanner;
 public class MainMenu {
-	//method to store libraries
+	//Array to store libraries. Permanent. 
 	static Library myLibraries[] = new Library[0];	
 	public static void main(String[] args) {
 		
@@ -23,11 +23,20 @@ public class MainMenu {
 				+ "3. Add a book \n"
 				+ "4. Rent \n"
 				+ "5. Return \n"
-				+ "6. View Books");
+				+ "6. View Books\n"
+				+ "7. Remove a library\n"
+				+ "8. Remove a book \n");
 	
 	System.out.print("Enter the number corresponding to the option you would like to do: ");
+	
 	int userChoice = scanner.nextInt();
 	System.out.println();
+	
+	if(userChoice != 2 && myLibraries.length == 0) {
+		System.out.println("Libraries have not been created yet. Please add a libraries");
+		System.out.println();
+		System.out.println();
+	}else {
 	switch(userChoice) {	
 	
 	case 1: 
@@ -39,11 +48,11 @@ public class MainMenu {
 		int x = 0;
 		while(x == 0) {
 			Scanner input = new Scanner(System.in);
-			System.out.println("Type in a new library address. Type 'd' to finish: ");
+			System.out.println("Type in a new library address. Type 'f' to finish: ");
 			
 			String userAddress = input.nextLine();
 			
-			if(userAddress.equals("d")) {
+			if(userAddress.equals("f")) {
 				x = 1;
 			}else {
 			Library userNewLibrary = new Library(userAddress);
@@ -53,17 +62,26 @@ public class MainMenu {
 		break;
 	
 	case 3:
-		addBook();
+		addBooks();
 		break;
 	case 4:
 		rentBook();
 		break;
 	case 5:
+		if(myLibraries.length == 0) {
+			System.out.println("No libraries.");
+		}
 		returnBook();
 		break;
 	case 6:
 		viewBooks();
 		break;
+	case 7:
+		removeLibrary();
+		break;
+	case 8:
+		removeBook();
+		break;
 	}
 	
 	System.out.println();
@@ -71,35 +89,45 @@ public class MainMenu {
 	System.out.println();
 
 
-  }
-		
+	}
+	
+	}
+	
 }
 	public static void addLibrary(Library someLibrary) {
-		
-		Library newArray[] = myLibraries;
-		Library tempArray[] = new Library[newArray.length + 1];
-		
-		for(int i = 0; i < newArray.length; i++) {
-			
-			tempArray[i] = newArray[i];
-			
-		}
-		tempArray[newArray.length] = someLibrary; 
-		myLibraries = tempArray;
-	}
 	
-	public static void printAllAddress() {
+		
+		Library tempArray[] = new Library[myLibraries.length + 1];  //tempArray will have ONE extra index since we want to add a library
 		
 		for(int i = 0; i < myLibraries.length; i++) {
 			
+			tempArray[i] = myLibraries[i]; //copy all library objects from our current library into the tempArray
+			
+		}
+		//make the last index of tempArray equal to the library object. User will input library address that will construct a library
+		tempArray[myLibraries.length] = someLibrary;  
+		
+		myLibraries = tempArray; //turn myLibraries into tempArray which tempArray has the new added book to it.
+	}
+	
+	public static void printAllAddress() {
+		//if the user's myLibraries array is empty, then there are currently no libraries.
+		if(myLibraries.length == 0) {
+			System.out.println("No libraries exist yet.");
+		}else {
+		
+		for(int i = 0; i < myLibraries.length; i++) {
+			//print out the libraries in order and number them.
 			System.out.print((i+1) + ". ");
 			myLibraries[i].printAddress();
 			
+			}
 		}
 		
 	}
 	
-	public static void addBook() {
+	public static void addBooks() {
+
 		Scanner input = new Scanner(System.in);
 		Scanner inputString = new Scanner(System.in);
 		printAllAddress();
@@ -107,13 +135,19 @@ public class MainMenu {
 		System.out.print("Type the number that corresponds to the library address you want to add a book to. Type 0 to end/cancel: ");
 		int userNum = input.nextInt();
 		
-		if(userNum != 0) {
-		System.out.println();
-		System.out.print("Type the title of the book you want to add: ");
-		String bookTitle = inputString.nextLine();
 		
-		//indexes will be 1 less than the displayed menu options
-		myLibraries[userNum-1].addBook(new Book(bookTitle));
+		if(userNum != 0) {
+			String bookTitle = "";
+			do {
+				System.out.println();
+				System.out.print("Type the title of the book you want to add. Type 0 to exit: ");
+				bookTitle = inputString.nextLine();
+		
+				//indexes will be 1 less than the displayed menu options
+				myLibraries[userNum-1].addBook(new Book(bookTitle));
+
+			}while(bookTitle.charAt(0) != '0');
+		
 		}
 		
 
@@ -129,6 +163,8 @@ public class MainMenu {
 		System.out.println();
 		
 		if(userNum != 0) {
+		myLibraries[userNum-1].printAvailableBooks();
+
 		System.out.print("Type the title of the book you want to rent: ");
 		String bookTitle = inputString.nextLine();
 		
@@ -142,12 +178,16 @@ public class MainMenu {
 		Scanner inputString = new Scanner(System.in);
 		printAllAddress();
 		
-		System.out.print("Type the number that corresponds to the library address you want to add a book to: ");
+		System.out.print("Type the number that corresponds to the library address you want to return a book to. Type 0 to cancel: ");
 		int userNum = input.nextInt();
 		System.out.println();
+
 		
 		if(userNum != 0) {
-		System.out.print("Type the title of the book you want to return: ");
+			
+		myLibraries[userNum-1].printAvailableBooks();
+
+		System.out.print("Type the title of the book you want to return (DO NOT ADD A SPACE AT THE END! CASE SENSITIVE): ");
 		String bookTitle = inputString.nextLine();
 		
 		//indexes will be 1 less than the displayed menu options
@@ -161,7 +201,7 @@ public class MainMenu {
 		
 		printAllAddress();
 		
-		System.out.print("Type the number that corresponds to the library address you want to add a book to: ");
+		System.out.print("Type the number that corresponds to the library address you want to view available books for: ");
 		int userNum = input.nextInt();
 		System.out.println();
 		
@@ -170,6 +210,123 @@ public class MainMenu {
 		
 		
 	}
+	public static void viewBooks(int a) {
+		
+		//indexes will be 1 less than the displayed menu options
+		myLibraries[a-1].printAvailableBooks();
+		
+		
+	}
 	
-
+	public static void removeLibrary() {
+		Scanner input = new Scanner(System.in);
+		
+		printAllAddress();
+		
+		System.out.print("Type in the number with the corresponding library number you want to remove. Press 0 to cancel: ");
+		int userNumChoice = input.nextInt();
+		
+		
+		if(userNumChoice == 0) {
+			
+			System.out.println("Operation cancelled. Returning");
+			
+		}else {
+			userNumChoice = userNumChoice - 1;			
+			Library tempArray[] = new Library[myLibraries.length-1];
+			for(int i = 0, k = 0; i < tempArray.length; i++, k++) {
+				
+				/* when we want do NOT want to include an index, just skip over it.
+				 * As a result, the matches from tempArray to myLibraries will be ONE OVER.
+				 * 
+				 * BEFORE THE SKIP
+				 * tempArray[i] == myLibraries [k]
+				 * 
+				 * AFTER THE SKIP:
+				 * tempArray[i] == myLibraries[k + 1]
+				*/
+				if(i == userNumChoice) { 
+					k = k + 1;
+				}
+				
+				tempArray[i] = myLibraries[k];
+				
+			}
+			//make our library array turn into tempArray which tempArray has removed the desired library.
+			myLibraries = tempArray;
+		}
+		
+		System.out.println();
+		System.out.println("LIBRARY HAS BEEN REMOVED. CURRENT LIBRARIES: ");
+		printAllAddress();
+		
+	}
+	
+	public static void removeBook() {
+		Scanner input = new Scanner(System.in);
+		printAllAddress();
+		System.out.print("Type the number that corresponds to the library address you want to view available books for: ");
+		int userNum = input.nextInt();
+		
+		//obtain the index
+		int libraryIndex = userNum - 1;
+		//each library object in our array will have a bookCollection array that stores Book objects.
+		Library userLibrary = myLibraries[libraryIndex];
+		viewBooks(userNum);
+		
+		Scanner inputBook = new Scanner(System.in);
+		
+		
+		System.out.print("Type in the title of the book exactly how it is displayed (case sensitive) to remove it from the catalog. Type 'f' to cancel: ");
+		String userBookChoice = inputBook.nextLine();
+		
+		if(userBookChoice.equals("f")) {
+			
+			System.out.println("Ending removal operation and returning back to main menu");
+			
+		}else {
+			
+			for(int i = 0; i < userLibrary.bookCollection.length; i++) {
+				
+				if(userLibrary.bookCollection[i].getTitle().equals(userBookChoice)){
+					Book[] tempArray = new Book[userLibrary.bookCollection.length - 1];
+					
+					for(int j = 0, k = 0; j < tempArray.length; j++, k++) {
+						
+						/*if the title of our book is found, then increment k by 1 to skip this book.
+						 * This means that tempArray will NOT take in the book the user wants to remove and skip over it.
+						 * As a result, the matching results will be skewed one slot over 
+						 * 
+						 * tempArray[i] = userLibrary.bookCollection[i + 1] AFTER THE SKIP
+						 */
+						if(userLibrary.bookCollection[k].getTitle().equals(userBookChoice)) { 
+							k = k + 1;
+						}
+						//tempArray will always take in SOME book object
+						tempArray[j] = userLibrary.bookCollection[k];						
+					}
+					
+					//let our specific library's book collection be equal to tempArray, which tempArray has the removed book
+					userLibrary.bookCollection = tempArray;
+					System.out.println();
+					System.out.println("BOOK HAS BEEN REMOVED FROM LIBRARY. CURRENT BOOKS AVAILABLE: ");
+					viewBooks(userNum);
+					
+				}else if(i == (userLibrary.bookCollection.length)-1){
+					
+					System.out.println("Searched through our catalog, could not find book. Please type the title again correctly.");
+					
+				}
+				
+				
+				
+				
+			}
+			
+			
+		}
+		
+		
+	}
+	
 }
