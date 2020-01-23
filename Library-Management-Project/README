@@ -22,3 +22,16 @@ https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-092-in
 
 Link to assignment and skeleton code of Library.java and Book.Java:
 https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-092-introduction-to-programming-in-java-january-iap-2010/assignments/MIT6_092IAP10_assn04.pdf
+
+
+SUMMARY OF PROJECT:
+
+In the main menu, the user will have an array that holds Library data type values. When creating the Library object using the Library.java
+file, each one of our libraries will have an address and an array that holds Book data types values. Each specific book in the array has a 
+title and a boolean variable that tells us whether or not it has been rented. 
+The main menu allows the user to access these books and libraries starting from the library array.
+
+LIBRARY -> COLLECTION OF BOOKS -> SOME BOOK -> TITLE
+    |                                 |
+    V                                 V
+    ADDRESS                         BORROWED?
