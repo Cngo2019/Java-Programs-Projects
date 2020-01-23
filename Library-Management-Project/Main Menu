@@ -3,13 +3,15 @@
  * 
  * 1/15/20
  * 
- * Main menu of project. Mainly focused on storing multiple libraries and doing 
- * things with their books.
- */
+ * This is the main menu of the project that allows users to manage libraries and books.
+ *  */
 
 import java.util.Scanner;
+
 public class MainMenu {
-	//Array to store libraries. Permanent. 
+	/*Array to store libraries. Permanent. Each library object in the array will have a book object associated with them
+	* if the user wants to add books.
+	*/
 	static Library myLibraries[] = new Library[0];	
 	public static void main(String[] args) {
 		
@@ -52,7 +54,7 @@ public class MainMenu {
 			
 			String userAddress = input.nextLine();
 			
-			if(userAddress.equals("f")) {
+			if(userAddress.equalsIgnoreCase("f")) {
 				x = 1;
 			}else {
 			Library userNewLibrary = new Library(userAddress);
@@ -94,6 +96,9 @@ public class MainMenu {
 	}
 	
 }
+	/*
+	 * Adds a library
+	 */
 	public static void addLibrary(Library someLibrary) {
 	
 		
@@ -109,7 +114,9 @@ public class MainMenu {
 		
 		myLibraries = tempArray; //turn myLibraries into tempArray which tempArray has the new added book to it.
 	}
-	
+	/*
+	 * Prints the address of all libraries stored in our array
+	 */
 	public static void printAllAddress() {
 		//if the user's myLibraries array is empty, then there are currently no libraries.
 		if(myLibraries.length == 0) {
@@ -125,7 +132,9 @@ public class MainMenu {
 		}
 		
 	}
-	
+	/*
+	 * Allow the user to keep adding books to a specific library
+	 */
 	public static void addBooks() {
 
 		Scanner input = new Scanner(System.in);
@@ -142,9 +151,16 @@ public class MainMenu {
 				System.out.println();
 				System.out.print("Type the title of the book you want to add. Type 0 to exit: ");
 				bookTitle = inputString.nextLine();
-		
+				bookTitle = bookTitle.trim();
+				
+				if(bookTitle.charAt(0) != '0') {
+					
+					myLibraries[userNum-1].addBook(new Book(bookTitle));
+
+				}else {	
+					bookTitle = "0";
+				}
 				//indexes will be 1 less than the displayed menu options
-				myLibraries[userNum-1].addBook(new Book(bookTitle));
 
 			}while(bookTitle.charAt(0) != '0');
 		
@@ -152,7 +168,9 @@ public class MainMenu {
 		
 
 }
-	
+	/*
+	 * Allow the user to rent a book from a specific library
+	 */
 	public static void rentBook() {
 		Scanner input = new Scanner(System.in);
 		Scanner inputString = new Scanner(System.in);
@@ -173,6 +191,10 @@ public class MainMenu {
 		}
 	}
 	
+	
+	/*
+	 * Allow the user to return a book
+	 */
 	public static void returnBook() {
 		Scanner input = new Scanner(System.in);
 		Scanner inputString = new Scanner(System.in);
@@ -187,14 +209,15 @@ public class MainMenu {
 			
 		myLibraries[userNum-1].printAvailableBooks();
 
-		System.out.print("Type the title of the book you want to return (DO NOT ADD A SPACE AT THE END! CASE SENSITIVE): ");
+		System.out.print("Type the title of the book you want to return : ");
 		String bookTitle = inputString.nextLine();
-		
+		bookTitle = bookTitle.trim();
 		//indexes will be 1 less than the displayed menu options
 		myLibraries[userNum-1].returnBook(bookTitle);
 		}
 	}
 	
+	//view books
 	public static void viewBooks() {
 		
 		Scanner input = new Scanner(System.in);
@@ -210,6 +233,7 @@ public class MainMenu {
 		
 		
 	}
+	//view books based on library index parameter (int)
 	public static void viewBooks(int a) {
 		
 		//indexes will be 1 less than the displayed menu options
@@ -217,7 +241,7 @@ public class MainMenu {
 		
 		
 	}
-	
+	//removes a library
 	public static void removeLibrary() {
 		Scanner input = new Scanner(System.in);
 		
@@ -262,6 +286,7 @@ public class MainMenu {
 		
 	}
 	
+	//remove a book from a library in our array
 	public static void removeBook() {
 		Scanner input = new Scanner(System.in);
 		printAllAddress();
@@ -272,15 +297,25 @@ public class MainMenu {
 		int libraryIndex = userNum - 1;
 		//each library object in our array will have a bookCollection array that stores Book objects.
 		Library userLibrary = myLibraries[libraryIndex];
+		
+		//if the library's book collection is == 0, then it has no books!
+		if(userLibrary.bookCollection.length == 0) {
+			System.out.println("LIBRARY HAS NO BOOKS.");
+		}else {
 		viewBooks(userNum);
 		
 		Scanner inputBook = new Scanner(System.in);
 		
 		
-		System.out.print("Type in the title of the book exactly how it is displayed (case sensitive) to remove it from the catalog. Type 'f' to cancel: ");
+		System.out.print("Type in the title of the book exactly how it is displayed"
+				+ " WITHOUT THE QUOTATION MARKS to remove it from the catalog. Type 'f' to cancel: ");
+		//obain book title
 		String userBookChoice = inputBook.nextLine();
+		//trim the title so that it does not have whitespace at the beginning or end.
+		userBookChoice = userBookChoice.trim();
 		
-		if(userBookChoice.equals("f")) {
+		//if the user DOES not enter 'f', then the program continues. If they do enter 'f', the program will end.
+		if(userBookChoice.equalsIgnoreCase("f")) {
 			
 			System.out.println("Ending removal operation and returning back to main menu");
 			
@@ -288,7 +323,7 @@ public class MainMenu {
 			
 			for(int i = 0; i < userLibrary.bookCollection.length; i++) {
 				
-				if(userLibrary.bookCollection[i].getTitle().equals(userBookChoice)){
+				if(userLibrary.bookCollection[i].getTitle().equalsIgnoreCase(userBookChoice)){
 					Book[] tempArray = new Book[userLibrary.bookCollection.length - 1];
 					
 					for(int j = 0, k = 0; j < tempArray.length; j++, k++) {
@@ -299,7 +334,7 @@ public class MainMenu {
 						 * 
 						 * tempArray[i] = userLibrary.bookCollection[i + 1] AFTER THE SKIP
 						 */
-						if(userLibrary.bookCollection[k].getTitle().equals(userBookChoice)) { 
+						if(userLibrary.bookCollection[k].getTitle().equalsIgnoreCase(userBookChoice)) { 
 							k = k + 1;
 						}
 						//tempArray will always take in SOME book object
@@ -311,22 +346,18 @@ public class MainMenu {
 					System.out.println();
 					System.out.println("BOOK HAS BEEN REMOVED FROM LIBRARY. CURRENT BOOKS AVAILABLE: ");
 					viewBooks(userNum);
-					
+				
+				//reaching the last index and the previous condition has not been executed means the book does not exist in catalog
 				}else if(i == (userLibrary.bookCollection.length)-1){
 					
 					System.out.println("Searched through our catalog, could not find book. Please type the title again correctly.");
 					
 				}
 				
-				
-				
-				
 			}
-			
-			
-		}
-		
-		
+				
+		}	
 	}
 	
+  }
 }
