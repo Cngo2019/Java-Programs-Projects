@@ -14,8 +14,8 @@
 
 public class Book {
 //our books will have a title and a "borrowed" or not status
-    String title;
-    boolean borrowed;
+    private String title;
+    private boolean borrowed;
 
     // Creates a new Book
     public Book(String bookTitle) {
@@ -49,7 +49,7 @@ public class Book {
     }
     // Prints the title (no return)
     public void printTitle() {
-    	System.out.print(this.title);
+    	System.out.print( "'" + this.title + "'");
     }
     
     public static void main(String[] arguments) {
@@ -64,4 +64,3 @@ public class Book {
     }
     
 } 
-
