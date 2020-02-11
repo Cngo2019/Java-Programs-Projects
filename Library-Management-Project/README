@@ -1,7 +1,13 @@
 Name: Can Ngo
 Project Started: January 7, 2020 (Learning objects and classes)
 Programming Started: January 15, 2020 (Writing and working with all the code)
-Last Updated: 1/23/2020
+Update: 1/23/2020
+    -Was able to get the main program coded. Menu and class interactions work.
+Update: 2/11/2020
+    -Incorporated data encapsulation techniques onto instance variables across all . 
+    -Multiple getters and setters created.
+    -Data encapsulation techniques applied to all class files.
+    
 
 The class files are assignment 4 of MIT's "Introduction to Programming in Java" course.
 After completing assignment 4, I decided to build upon the assignment by creating a library management system for the user to 
