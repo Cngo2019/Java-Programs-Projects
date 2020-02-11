@@ -4,7 +4,10 @@
  * 1/15/20
  * 
  * This is the main menu of the project that allows users to manage libraries and books.
- *  */
+ * 
+ * Update: 2/11/2020 Performed data encapsulation onto instance variables for all class files
+ *  
+ */
 
 import java.util.Scanner;
 
@@ -299,7 +302,7 @@ public class MainMenu {
 		Library userLibrary = myLibraries[libraryIndex];
 		
 		//if the library's book collection is == 0, then it has no books!
-		if(userLibrary.bookCollection.length == 0) {
+		if(userLibrary.obtainBookCollection().length == 0) {
 			System.out.println("LIBRARY HAS NO BOOKS.");
 		}else {
 		viewBooks(userNum);
@@ -309,7 +312,7 @@ public class MainMenu {
 		
 		System.out.print("Type in the title of the book exactly how it is displayed"
 				+ " WITHOUT THE QUOTATION MARKS to remove it from the catalog. Type 'f' to cancel: ");
-		//obain book title
+		//obtain book title
 		String userBookChoice = inputBook.nextLine();
 		//trim the title so that it does not have whitespace at the beginning or end.
 		userBookChoice = userBookChoice.trim();
@@ -321,10 +324,10 @@ public class MainMenu {
 			
 		}else {
 			
-			for(int i = 0; i < userLibrary.bookCollection.length; i++) {
+			for(int i = 0; i < userLibrary.obtainBookCollection().length; i++) {
 				
-				if(userLibrary.bookCollection[i].getTitle().equalsIgnoreCase(userBookChoice)){
-					Book[] tempArray = new Book[userLibrary.bookCollection.length - 1];
+				if(userLibrary.obtainBookInCollection(i).getTitle().equalsIgnoreCase(userBookChoice)){
+					Book[] tempArray = new Book[userLibrary.obtainBookCollection().length - 1];
 					
 					for(int j = 0, k = 0; j < tempArray.length; j++, k++) {
 						
@@ -334,21 +337,21 @@ public class MainMenu {
 						 * 
 						 * tempArray[i] = userLibrary.bookCollection[i + 1] AFTER THE SKIP
 						 */
-						if(userLibrary.bookCollection[k].getTitle().equalsIgnoreCase(userBookChoice)) { 
+						if(userLibrary.obtainBookInCollection(k).getTitle().equalsIgnoreCase(userBookChoice)) { 
 							k = k + 1;
 						}
 						//tempArray will always take in SOME book object
-						tempArray[j] = userLibrary.bookCollection[k];						
+						tempArray[j] = userLibrary.obtainBookInCollection(k);						
 					}
 					
 					//let our specific library's book collection be equal to tempArray, which tempArray has the removed book
-					userLibrary.bookCollection = tempArray;
+					userLibrary.redirectBookCollection(tempArray);
 					System.out.println();
 					System.out.println("BOOK HAS BEEN REMOVED FROM LIBRARY. CURRENT BOOKS AVAILABLE: ");
 					viewBooks(userNum);
 				
 				//reaching the last index and the previous condition has not been executed means the book does not exist in catalog
-				}else if(i == (userLibrary.bookCollection.length)-1){
+				}else if(i == (userLibrary.obtainBookCollection().length)-1){
 					
 					System.out.println("Searched through our catalog, could not find book. Please type the title again correctly.");
 					
