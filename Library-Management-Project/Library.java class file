@@ -13,12 +13,16 @@
  */
 public class Library {
 	
-	String libraryAddress;
-	Book[] bookCollection;
+	private String libraryAddress;
+	private Book[] bookCollection;
 	//Constructor no parameters. Creates a library
 	
 	public Library() {
+		
+		//each library will have a library address.
 		libraryAddress = "";
+		
+		//each library will have a bookCollection.
 		bookCollection = new Book[0];
 	}
 	//Constructor with parameters. Creates library
@@ -27,6 +31,19 @@ public class Library {
     		bookCollection = new Book[0];
     }
     
+    public Book obtainBookInCollection(int a) {
+    	return this.bookCollection[a];
+    }
+    
+    public Book[] obtainBookCollection() {
+    	return this.bookCollection;
+    }
+    
+    public Book[] redirectBookCollection(Book[] thisArray) {
+    	
+    	this.bookCollection = thisArray;
+    	return this.bookCollection;
+    }
     
     //to keep adding books
     public void addBook(Book newBook) {
@@ -59,7 +76,7 @@ public class Library {
     		the book in the current index and print out its title! */
     		
     		//we can use the printTitle() on a book object since the Book class is public.
-    		(this.bookCollection[i]).printTitle();
+    		System.out.print((i+1) + "." );(this.bookCollection[i]).printTitle();
     		System.out.println();
     	}
     }
@@ -75,31 +92,34 @@ public class Library {
     public void borrowBook(String bookName) {
     	//first thing: if the library has a collection == 0, then there are no books at all.
     	if(this.bookCollection.length == 0) {
-    		System.out.println("Book not in catalog");
+    		System.out.println("Library currently does not have any books");
     	}else { //continue the program if the library does have books.
     	
     		for(int i = 0; i < (this.bookCollection).length; i++) {
     			/*check if the book's title matches from the collection we have.
     			If there is a title match, this part of our if statement will execute.
     			 */
-    			if( (this.bookCollection[i].getTitle()).equals(bookName) ) {
-    				//checks to see if the book has been rented
+    			if( (this.bookCollection[i].getTitle()).equalsIgnoreCase(bookName)) {
+    				
+    				//If we find a title match, it checks to see if the book has been rented
     				if( (this.bookCollection[i]).isBorrowed() == true ) { //if the book borrowed == true, then we can not rent this book.
-    					System.out.println("Sorry, this book has been rented");   			
+    					System.out.println("Sorry, this book has been rented"); 
+    					//set i to end this loop after the user has an answer
+    					i = (this.bookCollection).length;
     				}else {    //if the book borrowed == false, then we can rent this book and borrow = true now.
     					(this.bookCollection[i]).borrowed();
     					System.out.println("Book has been rented!");
+    					//set i to end this loop after the user has an answer
+    					i = (this.bookCollection).length;
     					}
-    		
-    		/* if the last index does not match, it means the book
-    		  does not exist in the catalog. Therefore, execute this statement.
-    		*/
+    			//if we go through the entire array and the last index does not match, then the book will not exist in the catalog
     			}else if( (i == (this.bookCollection).length - 1)){
-    			
-    				System.out.println("Book not in catalog");
-    			
+					System.out.println("Book is not in the library's catalog. Please check your spelling (INPUT IS CASE SENSITIVE. DO NOT ADD A SPACE AT THE END)");
+					//set i to end this loop after the user has an answer
+					i = (this.bookCollection).length;
     			}
     		}
+    		
     }
     	
   }
@@ -112,19 +132,23 @@ public class Library {
 		}else {
 			for(int i = 0; i < (this.bookCollection).length; i++) {   		
     		//obtain the book with the desired title and check if it exists
-				if( (this.bookCollection[i].getTitle()).equals(bookName) ) {
+				if( (this.bookCollection[i].getTitle()).equalsIgnoreCase(bookName) ) {
 					
 					//checks to see if the book has been rented
 					//if the book borrowed == false, then they already have this book.
 					if( (this.bookCollection[i]).isBorrowed() == false ) {
     				System.out.println("This book has been returned already!");
+					i = (this.bookCollection).length;
     				//if the book borrowed == false, then we can rent this book and borrow = true now.
 					}else {//get the book at the matched index and return it.
 						(this.bookCollection[i]).returned();
 						System.out.println("Book has been returned. Thank you!");
+						i = (this.bookCollection).length;
 					}
 				}else if ( (i == (this.bookCollection).length - 1)){ //if the last index is not matched, user is at wrong library
-					System.out.println("Book is not in the library's directory. You might be at the wrong library!");	
+					System.out.println("Book is not in the library's catalog. Please check your spelling (INPUT IS CASE SENSITIVE. DO NOT ADD A SPACE AT THE END)");	
+					i = (this.bookCollection).length;
+
     		}
     	}
     }
@@ -175,10 +199,6 @@ public class Library {
 
         // Print the titles of available from the first library
         System.out.println("Books available in the first library:");
-        firstLibrary.printAvailableBooks();
-        
-      
-        
-        
+        firstLibrary.printAvailableBooks();        
     }
 } 
