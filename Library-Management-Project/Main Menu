@@ -6,11 +6,10 @@
  * This is the main menu of the project that allows users to manage libraries and books.
  * 
  * Update: 2/11/2020 Performed data encapsulation onto instance variables for all class files
- *  
+ *  Update: 2/13/2020 Added "Search by Title" function to allow the user to print out libraries contianing a certain book
  */
 
 import java.util.Scanner;
-
 public class MainMenu {
 	/*Array to store libraries. Permanent. Each library object in the array will have a book object associated with them
 	* if the user wants to add books.
@@ -19,7 +18,6 @@ public class MainMenu {
 	public static void main(String[] args) {
 		
 	int y = 0;
-		
 	while(y == 0) {
 	Scanner scanner = new Scanner(System.in);
 		
@@ -30,7 +28,8 @@ public class MainMenu {
 				+ "5. Return \n"
 				+ "6. View Books\n"
 				+ "7. Remove a library\n"
-				+ "8. Remove a book \n");
+				+ "8. Remove a book \n"
+				+ "9. Search by title \n");
 	
 	System.out.print("Enter the number corresponding to the option you would like to do: ");
 	
@@ -87,18 +86,49 @@ public class MainMenu {
 	case 8:
 		removeBook();
 		break;
+	case 9:
+		searchByTitle();
+		break;
+	default:
+		System.out.println("Please enter a valid number from the options");
+		break;
 	}
 	
 	System.out.println();
 	System.out.println();
-	System.out.println();
-
 
 	}
 	
 	}
 	
 }
+	
+	
+	public static void searchByTitle() {
+		Scanner input = new Scanner(System.in);
+		System.out.println("Please enter the title of the book: ");
+		String userTitle = input.nextLine();
+		int counter = 0;
+		
+		System.out.println("Book located at: ");
+		//take every single library in our collection and check if the books have userTitle
+		for(int i = 0; i < myLibraries.length; i++) {
+
+			for(int j = 0; j < myLibraries[i].obtainBookCollection().length; j++) {
+				String bookTitleObserved = myLibraries[i].obtainBookInCollection(j).getTitle();
+				if(bookTitleObserved.equalsIgnoreCase(userTitle)) {
+					counter += 1;
+					myLibraries[i].printAddress();
+				}
+			}
+			
+		}
+		
+		if(counter == 0) {
+			System.out.println("Book not found in any of our libraries");
+		}
+		
+	}
 	/*
 	 * Adds a library
 	 */
